@@ -4,6 +4,7 @@ import config from "./config/config";
 import morgan from "morgan"; // Http request logger, help debug
 import cors from "cors";
 import { requiresAuthentication } from "./middleware/authMiddleware";
+import {ipLoggerMiddleware} from "./middleware/iPWhiteListMiddleWare";
 
 // Import routes
 import authRoutes from "./routes/auth";
@@ -30,6 +31,7 @@ declare module "express-serve-static-core" {
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cookieParser()); // Enables reading cookies from req.cookies
+app.use(ipLoggerMiddleware);
 
 // Allows request from frontend
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
